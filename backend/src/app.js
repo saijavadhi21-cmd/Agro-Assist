@@ -14,10 +14,25 @@ const app = express();
 
 // ── Middleware ──────────────────────────────────────────
 app.use(cors({
-  origin: config.FRONTEND_URL,
+  origin(origin, callback) {
+    // Allow server-to-server tools, same-origin requests and configured frontend URL.
+    if (!origin || origin === config.FRONTEND_URL) {
+      callback(null, true);
+      return;
+    }
+
+    // Allow localhost variants for local static servers.
+    const localOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+    if (localOriginPattern.test(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true
 }));
-app.use(express.json());
+app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from frontend public folder

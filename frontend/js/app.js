@@ -13,8 +13,10 @@ const state = {
 // ── DOM Helpers ───────────────────────────────────────
 const $ = id => document.getElementById(id);
 const loading = (show, text = 'Analyzing...') => {
-  $('loadingOverlay').style.display = show ? 'block' : 'none';
-  $('loadingText').textContent = text;
+  const overlay = $('loadingOverlay');
+  const loadingText = $('loadingText');
+  if (overlay) overlay.style.display = show ? 'block' : 'none';
+  if (loadingText) loadingText.textContent = text;
 };
 const getNumber = value => {
   if (value === null || value === undefined || String(value).trim() === '') return null;
@@ -52,8 +54,7 @@ $('detectLocationBtn').addEventListener('click', () => {
     const { latitude: lat, longitude: lon } = pos.coords;
     setCoords(lat, lon);
     try {
-      const res = await fetch(`${API_ENDPOINTS.location.reverse}?lat=${lat}&lon=${lon}`);
-      const data = await res.json();
+      const data = await apiCall(`${API_ENDPOINTS.location.reverse}?lat=${lat}&lon=${lon}`);
       $('locationQuery').value = data.city + (data.state ? `, ${data.state}` : '');
     } catch (_) {}
   }, () => alert('Could not detect location. Please enter manually.'));
@@ -61,10 +62,8 @@ $('detectLocationBtn').addEventListener('click', () => {
 
 async function searchLocation(q) {
   try {
-    const res = await fetch(`${API_ENDPOINTS.location.geocode}?q=${encodeURIComponent(q)}`);
-    if (!res.ok) { hideSuggestions(); return; }
-    const data = await res.json();
-    showSuggestions(data);
+    const data = await apiCall(`${API_ENDPOINTS.location.geocode}?q=${encodeURIComponent(q)}`);
+    showSuggestions(Array.isArray(data) ? data : []);
   } catch (_) { hideSuggestions(); }
 }
 
@@ -129,9 +128,8 @@ async function runAnalysis() {
   $('results').style.display = 'none';
   loading(true, 'Analyzing soil & recommending crops...');
   try {
-    const cRes = await fetch(API_ENDPOINTS.crops.recommend, {
+    const cData = await apiCall(API_ENDPOINTS.crops.recommend, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         n,
         p,
@@ -142,11 +140,6 @@ async function runAnalysis() {
         inputText: quickInput
       })
     });
-    if (!cRes.ok) {
-      const err = await cRes.json().catch(() => ({}));
-      throw new Error(err.error || 'Failed to analyze inputs.');
-    }
-    const cData = await cRes.json();
     state.soilData = cData.inputs || { n, p, k, ph, area: area || 1 };
     state.recommendations = cData.recommendations;
     renderSoilHealth(cData.soilHealth);
@@ -273,16 +266,10 @@ async function loadBudget(cropKey) {
   $('budgetReport').innerHTML = `<div style="text-align:center;padding:32px"><div class="spinner"></div></div>`;
 
   try {
-    const res = await fetch(API_ENDPOINTS.crops.budget, {
+    const data = await apiCall(API_ENDPOINTS.crops.budget, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cropKey, area, n, p, k })
     });
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Budget calculation failed.');
-    }
-    const data = await res.json();
     renderBudget(data);
   } catch (err) {
     $('budgetReport').innerHTML = `<p style="color:red">${err.message || 'Failed to load budget.'}</p>`;
