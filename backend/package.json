@@ -1,0 +1,29 @@
+{
+  "name": "krishimitra-backend",
+  "version": "1.0.0",
+  "description": "KrishiMitra Backend - Smart Crop & Fertilizer Recommendation System",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "agriculture",
+    "crop",
+    "recommendation",
+    "fertilizer",
+    "farming"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

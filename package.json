@@ -1,0 +1,22 @@
+{
+  "name": "krishimitra",
+  "version": "1.0.0",
+  "description": "KrishiMitra - Smart Crop & Fertilizer Recommendation System",
+  "main": "backend/src/index.js",
+  "scripts": {
+    "start": "node backend/src/index.js",
+    "dev": "cd backend && npm run dev",
+    "install-all": "npm install && cd backend && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "agriculture",
+    "crop",
+    "recommendation",
+    "fertilizer",
+    "farming"
+  ],
+  "author": "",
+  "license": "ISC"
+}
+

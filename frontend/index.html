@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiMitra | Smart Crop Advisory System</title>
+    <link rel="icon" type="image/png" href="./assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<header>
+    <nav class="header__nav w-120">
+        <div class="header__logo">
+            <img src="./assets/logo.png" alt="KrishiMitra Logo">
+        </div>
+
+        <ul class="header__menu">
+            <li class="menu__item">
+                <a href="#" class="menu__link active">Home</a>
+            </li>
+            <li class="menu__item">
+                <a href="#features" class="menu__link">Features</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<!-- HERO SECTION -->
+<section class="hero w-120">
+    <div class="hero__content">
+        <div class="hero__text">
+            <h1 class="hero__title">KRISHIMITRA</h1>
+            <p class="hero__description">
+                KrishiMitra is a smart agricultural advisory system designed to help
+                farmers get personalized crop recommendations, fertilizer guidance, and
+                investment budgeting through soil analysis and location-based insights.
+            </p>
+            <button onclick="openExplore()" class="btn btn__hero">Get Started</button>
+        </div>
+        <div class="hero__img">
+            <img src="./assets/hero.png" alt="Smart Agriculture">
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section id="features" class="features w-120">
+    <h2 class="section__title">Features</h2>
+    <div class="features__grid">
+        <div class="feature__card">
+            <div class="feature__icon">🌾</div>
+            <h3>Crop Recommendations</h3>
+            <p>Get AI-powered crop recommendations based on your soil parameters (N, P, K, pH)</p>
+        </div>
+        <div class="feature__card">
+            <div class="feature__icon">📍</div>
+            <h3>Location-Based Insights</h3>
+            <p>Discover crops suitable for your region using GPS or manual location search</p>
+        </div>
+        <div class="feature__card">
+            <div class="feature__icon">💰</div>
+            <h3>Budget Calculator</h3>
+            <p>Calculate fertilizer and seed investment required for each recommended crop</p>
+        </div>
+        <div class="feature__card">
+            <div class="feature__icon">📊</div>
+            <h3>Soil Analysis</h3>
+            <p>Get detailed soil health reports with nutrient classifications and pH advice</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta w-120">
+    <h2>Ready to optimize your farm?</h2>
+    <button onclick="openExplore()" class="btn btn__hero">Explore Now</button>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>&copy; 2025 KrishiMitra. All rights reserved.</p>
+</footer>
+
+</div>
+
+<script>
+function openExplore() {
+    window.location.href = './pages/farm-advisor.html';
+}
+</script>
+</body>
+
+</html>
